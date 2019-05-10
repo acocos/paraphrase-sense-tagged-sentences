@@ -1,8 +1,6 @@
 # Paraphrase Sense-Tagged Sentences (PSTS)
 
-This directory holds the PSTS resource, which contains sentences pertaining to paraphrase 
-pairs from PPDB. For example, sentences containing `bug` in its sense as a paraphrase of
-`error` include:
+This directory holds the PSTS resource, which contains sentences pertaining to paraphrase pairs from PPDB. For example, sentences containing `bug` in its sense as a paraphrase of `error` include:
 
 - `Report a **bug** .`
 - `This **bug** code is normally caused by a parity error in the system memory .`
@@ -15,7 +13,7 @@ and sentences containing `bug` in its sense as a paraphrase of `microbe` include
 If you use this resource in your work, please cite [this paper](https://www.seas.upenn.edu/~acocos/papers/anne-thesis-final.pdf):
 
 ```
-@phdthesis{phdthesis,
+@phdthesis{cocos19thesis,
   author       = {Anne O'Donnell Cocos}, 
   title        = {Paraphrase-based Models of Lexical Semantics},
   school       = {University of Pennsylvania},
@@ -43,56 +41,53 @@ If you use this resource in your work, please cite [this paper](https://www.seas
 ## Sizes
 
 Currently PSTS comes in two sizes:
-- `psts-all` (252.0 GB): Contains up to 10k sentences pertaining to each of the PPDB-XXL paraphrases 
-having PPDB2.0Score at least 2.0
-- `psts-small` (2.2 GB): Contains up to 30 sentences pertaining to the PPDB-XXL paraphrases having 
-PPDB2.0Score at least 2.0
+
+- `psts-all` (252.0 GB): Contains up to 10k sentences pertaining to each of the PPDB-XXL paraphrases having PPDB2.0Score at least 2.0
+
+- `psts-small` (2.2 GB): Contains up to 30 sentences pertaining to the PPDB-XXL paraphrases having PPDB2.0Score at least 2.0
 
 ## Download and Installation
 
-0.  First you'll need to have MongoDB installed, which you
-can do by following the directions for your OS [here](https://docs.mongodb.com/manual/installation/).
+1.  First you'll need to have MongoDB installed, which you can do by following the directions for your OS [here](https://docs.mongodb.com/manual/installation/).
 
-1. Download one of the PSTS JSON dump files (`psts-all.zip` or `psts-small.zip`) using
-the script `./src/download_db.sh`:
-```
-./src/download_db.sh <SIZE>
-```
-where `<SIZE>` is one of `all` or `small`. Warning -- the `all` version is 252 GB compressed. 
-If you are just browsing, start with the `small` version.
+2. Download one of the PSTS dump files (`psts-all.zip` or `psts-small.zip`) using the script `./src/download_db.sh`:
 
-2. Build the database from the downloaded dump, using the script `./src/build_db_from_dump.sh`:
-```
-./src/build_db_from_dump.sh <SIZE>
-```
-where `<SIZE>` is one of `all` or `small`. The whole process should take about 15-20 min for 
-the `small` version...significantly larger for `all`.
+    ```
+    ./src/download_db.sh <SIZE>
+    ```
+    where `<SIZE>` is one of `all` or `small`. **Warning** the `all` version is 252 GB compressed. If you are just browsing, or don't need more than 30 sentences per paraphrase pair, use the `small` version.
 
-3. Once the MongoDB instance has been setup in step 2, each time you want to query it using `psts.py` 
-you'll need to deploy a local instance of the database. You can do this easily by running:
-```
-./src/deploy.sh <SIZE>
-```
-where `<SIZE>` is one of `all` or `small`.
+3. Build the database from the downloaded dump, using the script `./src/build_db_from_dump.sh`:
 
-4. The script `psts.py` contains functions for querying the local PSTS MongoDB instance. The
-main query function is `PSTS.find()` -- here is an example of its use:
+    ```
+    ./src/build_db_from_dump.sh <SIZE>
+    ```
+    where `<SIZE>` is one of `all` or `small`. The whole process should take about 15-20 min for the `small` version...significantly longer for `all`.
 
-```python
-import psts
+4. Once the MongoDB instance has been setup in step 2, each time you want to query it using `psts.py` you'll need to deploy a local instance of the database. You can do this easily by running:
 
-resource = psts.PSTS('localhost',27017)
+    ```
+    ./src/deploy.sh <SIZE>
+    ```
+    where `<SIZE>` is one of `all` or `small`.
 
-result = resource.find('NN', 'bug', 'microbe', n=5, weights='score')
-for sent in result:
-    print '\t'.join((sent['tokens'], sent['lang'], sent['trans']))
+5. The script `psts.py` contains functions for querying the local PSTS MongoDB instance. The main query function is `PSTS.find()` -- here is an example of its use:
 
-# ulcer bug strongly linked to irregular heartbeat        ar      ميكروب
-# how do you keep yourself safe from the flu bug when traveling ? ar      ميكروب
-# could have been a bug he got here .     fr      microbe
-# has he got this bug ?   fr      microbe
-# i mean , if we can get a bug that 's resistant to the virus , this might be worth it .        fr      bactérie
-```
+    ```python
+    import psts
+    
+    resource = psts.PSTS('localhost',27017)
+    
+    result = resource.find('NN', 'bug', 'microbe', n=5, weights='score')
+    for sent in result:
+        print '\t'.join((sent['tokens'], sent['lang'], sent['trans']))
+    
+    # ulcer bug strongly linked to irregular heartbeat        ar      ميكروب
+    # how do you keep yourself safe from the flu bug when traveling ? ar      ميكروب
+    # could have been a bug he got here .     fr      microbe
+    # has he got this bug ?   fr      microbe
+    # i mean , if we can get a bug that 's resistant to the virus , this might be worth it .        fr      bactérie
+    ```
 
 ## Database Structure
 
@@ -126,6 +121,7 @@ The PSTS resource is stored as a collection of MongoDB documents. For a `(tgt, p
 ```
 
 Attributes are as follows:
+
 - `pos` : the part of speech of the paraphrase pair
 - `pp1` : the source or target, whichever is first alphabetically
 - `pp2` : the source or target, whichever is second alphabetically
@@ -134,6 +130,7 @@ Attributes are as follows:
 - `pp2_sents` : PSTS sentences containing pp2 (target) in its sense as a paraphrase of pp1 (pp)
 
 Within the sentence lists, attributes of each dict are:
+
 - `lang` : the language of the translation used to extract the sentence
 - `trans` : the translation used to extract the sentence
 - `tokens` : the (tokenized) sentence
