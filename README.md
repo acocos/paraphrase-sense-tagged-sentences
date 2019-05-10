@@ -12,9 +12,9 @@ and sentences containing `bug` in its sense as a paraphrase of `microbe` include
 - `You know, maybe it's that **bug** that's been going around.`
 - `We all picked up a little **bug** from India.`
 
-If you use this resource in your work, please cite:
+If you use this resource in your work, please cite [this paper](https://www.seas.upenn.edu/~acocos/papers/anne-thesis-final.pdf):
 
-'''
+```
 @phdthesis{phdthesis,
   author       = {Anne O'Donnell Cocos}, 
   title        = {Paraphrase-based Models of Lexical Semantics},
@@ -22,7 +22,7 @@ If you use this resource in your work, please cite:
   year         = 2019,
   month        = 5,
 }
-'''
+```
 
 ## Contents
 
@@ -55,24 +55,24 @@ can do by following the directions for your OS [here](https://docs.mongodb.com/m
 
 1. Download one of the PSTS JSON dump files (`psts-all.zip` or `psts-small.zip`) using
 the script `./src/download_db.sh`:
-    '''
-    ./src/download_db.sh <SIZE>
-    '''
+```
+./src/download_db.sh <SIZE>
+```
 where `<SIZE>` is one of `all` or `small`. Warning -- the `all` version is 252 GB compressed. 
 If you are just browsing, start with the `small` version.
 
 2. Build the database from the downloaded dump, using the script `./src/build_db_from_dump.sh`:
-    '''
-    ./src/build_db_from_dump.sh <SIZE>
-    '''
+```
+./src/build_db_from_dump.sh <SIZE>
+```
 where `<SIZE>` is one of `all` or `small`. The whole process should take about 15-20 min for 
 the `small` version...significantly larger for `all`.
 
 3. Once the MongoDB instance has been setup in step 2, each time you want to query it using `psts.py` 
 you'll need to deploy a local instance of the database. You can do this easily by running:
-    '''
-    ./src/deploy.sh <SIZE>
-    '''
+```
+./src/deploy.sh <SIZE>
+```
 where `<SIZE>` is one of `all` or `small`.
 
 4. The script `psts.py` contains functions for querying the local PSTS MongoDB instance. The
