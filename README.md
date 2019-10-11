@@ -10,6 +10,7 @@ and sentences containing `bug` in its sense as a paraphrase of `microbe` include
 - `You know, maybe it's that **bug** that's been going around.`
 - `We all picked up a little **bug** from India.`
 
+<!--
 If you use this resource in your work, please cite [this paper](https://www.seas.upenn.edu/~acocos/papers/anne-thesis-final.pdf):
 
 ```
@@ -21,6 +22,7 @@ If you use this resource in your work, please cite [this paper](https://www.seas
   month        = 5,
 }
 ```
+-->
 
 ## Contents
 
