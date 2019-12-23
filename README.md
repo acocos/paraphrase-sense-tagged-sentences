@@ -10,19 +10,20 @@ and sentences containing `bug` in its sense as a paraphrase of `microbe` include
 - `You know, maybe it's that **bug** that's been going around.`
 - `We all picked up a little **bug** from India.`
 
-<!--
 If you use this resource in your work, please cite [this paper](https://www.seas.upenn.edu/~acocos/papers/anne-thesis-final.pdf):
 
 ```
-@phdthesis{cocos19thesis,
-  author       = {Anne O'Donnell Cocos}, 
-  title        = {Paraphrase-based Models of Lexical Semantics},
-  school       = {University of Pennsylvania},
-  year         = 2019,
-  month        = 5,
+@article{doi:10.1162/tacl-a-00295,
+  author       = {Anne Cocos and Chris Callison-Burch}, 
+  title        = {Paraphrase-Sense-Tagged Sentences},
+  journal      = {Transactions of the Association for Computational Linguistics},
+  year         = {2019},
+  volume       = {7},
+  number       = {},
+  pages        = {714-728},
+  doi          = {10.1162/tacl\_a\_00295}
 }
 ```
--->
 
 ## Contents
 
